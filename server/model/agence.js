@@ -11,11 +11,11 @@ var schema=new mongoose.Schema({
         required:false,
         
     },
-    categorie:{
+  
+    agent: { 
         type: mongoose.Schema.Types.ObjectId,
-        ref: "category"
-        
-    },
+        ref: "agent"
+     },
    
 });
 

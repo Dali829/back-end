@@ -10,8 +10,13 @@ var schema=new mongoose.Schema({
     },
     categoryPhoto:{
         type:String,
-        required:true
-    }
+        required:false
+    },
+    agence:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "agent"
+        
+    },
 });
 
 

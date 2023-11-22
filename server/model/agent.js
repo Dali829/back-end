@@ -60,6 +60,10 @@ var schema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "agence"
      },
+     isBlocked:{
+        type:Boolean,
+        default:false
+    },
 });
 var agent=mongoose.model("agent",schema);
 module.exports=agent;

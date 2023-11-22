@@ -14,7 +14,7 @@ var schema=new mongoose.Schema({
     },
     productImage:{
         type:String,
-        required:true
+        required:false
     },
     categoryId:{
         type:String,
