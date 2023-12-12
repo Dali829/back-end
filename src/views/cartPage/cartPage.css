@@ -1,0 +1,24 @@
+
+.cartPageContainer
+{
+    background-image: url('../../assets/shopCartBg.png');
+    background-size: contain;
+    background-attachment: fixed;
+    background-position: center center;
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+}
+.noProductMessage
+{
+    color: #FE441C;
+    background-color: transparent;
+}
+.addProuctBtn{
+    color: #FE441C;
+    border: 1px solid #FE441C;
+}
+.addProuctBtn:hover{
+    color: #FFF;
+    background-color:  #FE441C;
+}

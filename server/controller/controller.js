@@ -128,7 +128,17 @@ controller.getAgentById = (req, res) => {
 /*******Product Get Functions ********/
 //get all products
 controller.getAllProducts = (req, res) => {
-  product.find({})
+  product.find({}).populate("agent")
+    .then((products) => {
+      res.send(products);
+    })
+    .catch((error) => {
+      res.send('an error has oocured when retrieving products from database')
+    })
+}
+
+controller.getAllProductsByIdAgent = (req, res) => {
+  product.find({agent:req.params.id}).populate("agent")
     .then((products) => {
       res.send(products);
     })
@@ -436,6 +446,7 @@ controller.addNewAgent = (req, res) => {
 //add new product 
 controller.addNewProduct = (req, res) => {
   const newProduct = new product({
+    agent:req.body.agent,
     productName: req.body.productName,
     productDescription: req.body.productDescription,
     unitPrice: req.body.unitPrice,
@@ -489,6 +500,17 @@ controller.getAllReservations = (req, res) => {
       res.send('error while trying to retroeve all users ');
     })
 }
+
+controller.getAllReservationsByIdAgent = (req, res) => {
+  reservation.find({agent: req.params.id}).populate("agent").populate("product")
+    .then(Reservations => {
+      res.send(Reservations);
+    })
+    .catch(error => {
+      res.send('error while trying to retroeve all users ');
+    })
+}
+
 
 
 controller.updateReservation = (req, res) => {

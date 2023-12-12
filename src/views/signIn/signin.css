@@ -1,0 +1,46 @@
+.loginContainer
+{
+  box-shadow: -2px -4px 116px -50px rgba(0,0,0,0.64);
+border-radius: 25px;
+  
+}
+.loginDivContainer{
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+h4{
+  color:#FE441C;
+}
+.loginAccount{
+  background-color: #FE441C;
+  border: 1px solid #FE441C;
+}
+.loginAccount:hover{
+  background-color: #c93919;
+  border-color: #c93919;
+}
+.createAccount{
+  color: #FE441C;
+  border: 1px solid #FE441C;
+}
+.createAccount:hover
+{
+  box-shadow: -2px -4px 116px -10px #FE441C;
+  background-color: #FE441C;
+  color: #FFF;
+}
+.error
+{
+  color: #FE441C;
+}
+.avatarContainer
+{
+  width: 100px;
+  height: 100px;
+  background-image: url('../../assets/security.png');
+  border-radius: 50%;
+  background-size: cover;
+  margin: auto;
+}

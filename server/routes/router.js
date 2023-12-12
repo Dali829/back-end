@@ -53,6 +53,10 @@ route.get('/agent/getById/:id', (req, res) => {
 route.get('/product/getAllProducts/', (req, res) => {
    controller.getAllProducts(req, res);
 });
+//get products by Id Agent 
+route.get('/product/getAllProducts/:id', (req, res) => {
+   controller.getAllProductsByIdAgent(req, res);
+});
 //get product By ID
 route.get('/product/getProductById/:id', (req, res) => {
    controller.getProductById(req, res);
@@ -139,6 +143,11 @@ route.put('/categories/updateOne/', (req, res) => {
 route.post('/reservation/addReservation', (req, res) => {
    controller.createReservation(req, res);
 })
+
+
+route.get('/reservations/getAllReservations/user/:id', (req, res) => {
+   controller.getAllReservationsByIdAgent(req, res);
+});
 
 
 route.get('/reservations/getAllReservations', (req, res) => {

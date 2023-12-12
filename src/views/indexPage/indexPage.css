@@ -1,0 +1,77 @@
+
+.landingSpace{
+    background-image: url('../../assets/bg-container.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+.landingSpace{
+    height: 90vh;
+}
+.allKindsSlogan
+{
+    color: #fe441c !important;
+    font-size: 1.5em;
+}
+.chooseSlogan
+{
+    color:#3B1615;
+    font-size: 4.5em;
+}
+.welcomeMessage
+{
+    color: rgb(100, 99, 99);
+    font-weight: 300;
+    font-size: 1.5em;
+}
+.shopButton
+{
+    width: fit-content;
+    height: fit-content;
+    background-color: #FE441C !important;
+    color: wheat;
+    font-size: 1.5em;
+    border-radius: 20px;
+}
+.playButton
+{
+   
+}
+.watchButton
+{
+    background: rgb(228,7,253);
+background: linear-gradient(90deg, rgba(228,7,253,1) 0%, rgba(126,22,213,0.3925945378151261) 99%);
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+}
+.icon
+{
+    margin: auto;
+    font-size: 2em;
+    padding: 0;
+    color:#A239ED ;
+    background-color: white;
+    border-radius: 50%;
+    position: relative;
+    left: 10px;
+    height: 1.5em;
+    width: 1.5em;
+}
+#buttonText
+{
+    color: gray;
+    margin: auto;
+    font-size: large;
+    font-weight: 500;
+}
+.shopNowButton:hover
+{
+   color: white;
+}
+.callToActionButton
+{
+    text-decoration: none;
+    color: wheat !important;
+}

@@ -19,7 +19,12 @@ var schema=new mongoose.Schema({
     categoryId:{
         type:String,
         required:true
-    }
+    },
+    agent:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "agent"
+        
+    },
 });
 
 
