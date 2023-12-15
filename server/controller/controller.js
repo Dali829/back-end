@@ -2,7 +2,6 @@ var bcrypt = require('bcrypt');
 var fs = require('fs');
 const agent = require('../model/agent');
 const admin = require('../model/admin');
-const customer = require('../model/customer');
 const { parse } = require('path');
 const mongoose = require('mongoose');
 const product = require('../model/product');
@@ -12,7 +11,6 @@ const agence = require('../model/agence');
 
 const jwt = require('jsonwebtoken');
 var controller = {}
-var cart = require('../model/cart');
 const { default: axios } = require('axios');
 
 
@@ -58,48 +56,7 @@ controller.loginAgent = (req, res) => {
       res.send(error)
     })
 }
-//admin login 
-controller.loginAdmin = (req, res) => {
-  admin.findOne({ email: req.body.email })
-    .then(selectedAgent => {
-      if (!selectedAgent) {
-        res.send('no account found with this email ')
-      }
-      else {
-        var trusted = bcrypt.compareSync(req.body.password, selectedAgent.password);
-        if (trusted == true) {
-          res.send(selectedAgent)
-        }
-        else {
-          res.send('your password is incorrect')
-        }
-      }
-    })
-    .catch(error => {
-      res.send(error)
-    })
-}
-//customer login 
-controller.loginCustomer = (req, res) => {
-  customer.findOne({ email: req.body.email })
-    .then(selectedCustomer => {
-      if (!selectedCustomer) {
-        res.send('no account found with this email ')
-      }
-      else {
-        var trusted = bcrypt.compareSync(req.body.password, selectedCustomer.password);
-        if (trusted) {
-          res.send(selectedCustomer)
-        }
-        else {
-          res.send('your password is incorrect')
-        }
-      }
-    })
-    .catch(error => {
-      res.send(error)
-    })
-}
+
 
 
 /***************Get Data Functions**************************************/
@@ -187,12 +144,6 @@ controller.getCategoryById = (req, res) => {
       res.send('error while trying to find a category')
     })
 }
-/*****Agent Get Routes*********/
-controller.getCartItems = (req, res) => {
-  cart.find({ $and: [{ customerId: req.params.customerId }, { orderId: 'no OrderID Yet' }] })
-    .then(selectedItems => { res.send(selectedItems) })
-    .catch(error => { res.send(error) })
-}
 
 /***************Delete Data Functions**************************************/
 /*******Agents Delete Api ********/
@@ -206,16 +157,7 @@ controller.deleteAgent = (req, res) => {
       res.send(error)
     });
 }
-//delete Permanently 
-controller.deleteAgentPermanently = (req, res) => {
-  agent.findByIdAndDelete(req.params.id)
-    .then((data) => {
-      res.send('agent account deleted permanetly successfully');
-    })
-    .catch((error) => {
-      res.send(error)
-    });
-}
+
 /*******Products Delete Functions ********/
 //delete Product
 controller.deleteProduct = (req, res) => {
@@ -227,16 +169,7 @@ controller.deleteProduct = (req, res) => {
       res.send('an error has occured while trying to delete a product ')
     })
 }
-/*******Category Delete Functions ********/
-controller.deleteCategory = (req, res) => {
-  category.findByIdAndDelete(req.params.id)
-    .then(deletedCategory => {
-      res.send(deletedCategory);
-    })
-    .catch(error => {
-      res.send('erro while trying to delete the given category ');
-    })
-}
+
 /***************Update Functions**************************************/
 /*********Admin Update Functions*************/
 //update agent profile 
@@ -259,36 +192,7 @@ controller.updateAdminProfile = (req, res) => {
     });
 }
 /*********Agent Update Functions*************/
-//block agent
-controller.blocAgent = (req, res) => {
-  agent.findByIdAndUpdate(req.params.id, { etatCompte: 'blocked' })
-    .then((data) => {
-      res.send('agent account blocked successfully');
-    })
-    .catch((error) => {
-      res.send(error)
-    });
-}
-//unblock agent
-controller.unBlockAgent = (req, res) => {
-  agent.findByIdAndUpdate(req.params.id, { etatCompte: 'active' })
-    .then((data) => {
-      res.send('agent account activated successfully');
-    })
-    .catch((error) => {
-      res.send(error)
-    });
-}
-//restore agent
-controller.restoreAgent = (req, res) => {
-  agent.findByIdAndUpdate(req.params.id, { etatCompte: 'active' })
-    .then((data) => {
-      res.send('agent account restored successfully');
-    })
-    .catch((error) => {
-      res.send(error)
-    });
-}
+
 //update agent profile 
 controller.updateAgence = (req, res) => {
   agence.findOneAndUpdate({ _id: req.body.id }, { $set: req.body }, { new: true })
@@ -343,83 +247,7 @@ controller.updateCategory = (req, res) => {
 
 
 
-/************************POST data functions*************************/
-/********SubCommand Register************ */
-controller.addToCart = (req, res) => {
-  console.log(req.body);
-  axios.get('http://localhost:3030/product/getProductById/' + req.body.productId)
-    .then(response => {
-      const { productId, customerId } = req.body;
-      const productCount = 1; // Initial product count
 
-      // Check if an item with the same customerId, productId, and orderId exists
-      cart.findOne({
-        productId,
-        customerId,
-        orderId: 'no OrderID Yet'
-      })
-        .then(existingCartItem => {
-          if (existingCartItem) {
-            // If the item exists, increment the category by 1
-            existingCartItem.productCount = '' + (parseInt(existingCartItem.productCount) + 1);
-            existingCartItem.save()
-              .then(savedItem => {
-                res.send('Product quantity updated successfully ' + savedItem);
-              })
-              .catch(error => {
-                res.send(error);
-              });
-          } else {
-            // If the item does not exist, create a new cart item
-            const cartItem = new cart({
-              productId,
-              customerId,
-              productCount,
-              subTotalPrice: response.data.unitPrice,
-              orderId: 'no OrderID Yet'
-            });
-
-            cartItem.save()
-              .then(savedItem => {
-                res.send('Product saved successfully ' + savedItem);
-              })
-              .catch(error => {
-                res.send(error);
-              });
-          }
-        })
-        .catch(error => {
-          res.send(error);
-        });
-    })
-    .catch(error => {
-      res.send(error);
-    });
-};
-
-/********Customer Register************ */
-controller.customerRegister = (req, res) => {
-  const newCustomer = new customer({
-    name: req.body.customerName,
-    email: req.body.customerEmail,
-    avatar: req.body.customerPhoto,
-    regionAddress: req.body.customerAddressRegion,
-    cityAddress: req.body.customerAddressCity,
-    postalCode: req.body.customerAddressPostalCode,
-    phone: req.body.customerPhoneNumber,
-    password: bcrypt.hashSync(req.body.customerPassword, 10)
-  });
-  console.log(req.body)
-  newCustomer.save()
-    .then(savedCustomer => {
-      res.status = 200;
-      res.send(savedCustomer)
-    })
-    .catch(error => {
-      res.status = 500;
-      res.send(error)
-    })
-}
 /******** Agent Post Functions********/
 //add a new agent
 controller.addNewAgent = (req, res) => {

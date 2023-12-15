@@ -9,21 +9,10 @@ var jwt = require('jsonwebtoken');
 route.post('/agent/login/', (req, res) => {
    controller.loginAgent(req, res);
 });
-//admin login
-route.post(('/admin/login/', (req, res) => {
-   controller.loginAdmin(req, res);
-}));
 
-/****************POST routes***********************/
-/*************Customer Post Routes*******/
-route.post('/customer/login/', (req, res) => {
-   controller.loginCustomer(req, res);
-})
-/************Customer POST routes*************/
-//add a new customer
-route.post('/customer/register/', (req, res) => {
-   controller.customerRegister(req, res);
-});
+
+
+
 /************Agent POST routes*************/
 //add a new agent
 route.post('/agent/addNewAgent/', (req, res) => {
@@ -65,10 +54,7 @@ route.get('/product/getProductById/:id', (req, res) => {
 route.get('/product/getProductsByCategoryId/:categoryId', (req, res) => {
    controller.getProductsByCategoryID(req, res);
 });
-//get all the ordered products of an user AKA cart items
-route.get('/cart/getCartItems/:customerId', (req, res) => {
-   controller.getCartItems(req, res)
-})
+
 /************Categories routes*************/
 //get all categories
 route.get('/categories/getAllCategories/', (req, res) => {
@@ -78,10 +64,7 @@ route.get('/categories/getAllCategories/', (req, res) => {
 route.get('/categories/getCategoryById/:id', (req, res) => {
    controller.getCategoryById(req, res);
 });
-/************Categories routes*************/
-route.post('/cart/addToCart/', (req, res) => {
-   controller.addToCart(req, res);
-})
+
 
 /****************Delete routes***********************/
 /************Agent routes*************/
@@ -93,10 +76,7 @@ route.delete('/agent/deleteAgent/:id', (req, res) => {
 route.delete('/product/deleteProduct/:id', (req, res) => {
    controller.deleteProduct(req, res);
 })
-//delete definitevily 
-route.delete('/agent/deleteAgentPermanently/:id', (req, res) => {
-   controller.deleteAgentPermanently(req, res);
-});
+
 /************Category routes*************/
 //delete Category
 route.delete('/categories/deleteCategory/:id', (req, res) => {
@@ -105,29 +85,12 @@ route.delete('/categories/deleteCategory/:id', (req, res) => {
 
 
 
-/****************Update routes***********************/
-/************Agent routes*************/
-//block an agent
-route.put('/agent/blocAgent/:id', (req, res) => {
-   controller.blocAgent(req, res);
-});
-//unblock an agent 
-route.put('/agent/unBlockAgent/:id', (req, res) => {
-   controller.unBlockAgent(req, res);
-});
-//restore agent account
-route.put('/agent/restoreAgent/', (req, res) => {
-   controller.restoreAgent(req, res);
-})
+
 //update agent profile
 route.put('/agent/updateProfile/', (req, res) => {
    controller.updateAgentProfile(req, res);
 });
-/*********Admin Update Functions************/
-//update admin profile
-route.put('/admin/updateProfile/', (req, res) => {
-   controller.updateAdminProfile(req, res);
-});
+
 /*********Product Update Functions*************/
 //update product 
 route.put('/product/updateProduct/', (req, res) => {
